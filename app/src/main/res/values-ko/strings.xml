@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">포모도로</string>
+    <string name="login_with_google">Google 계정으로 로그인</string>
+    <string name="app_slogan">stay focus, be present</string>
+</resources>

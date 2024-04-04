@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">pomodoro</string>
+    <string name="login_with_google">Đăng nhập bằng tài khoản Google</string>
+    <string name="app_slogan">stay focus, be present</string>
+</resources>

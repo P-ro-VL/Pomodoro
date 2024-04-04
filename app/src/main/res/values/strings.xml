@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">pomodoro</string>
+    <string name="login_with_google">Login with Google Account</string>
+    <string name="app_slogan">stay focused, be present</string>
+    <string name="hello_string">Good morning, Linh!</string>
+    <string name="level">Level</string>
+    <string name="level_taken_hour">You have studied for %taken% hours.</string>
+    <string name="level_remaining_hour">%remaining% more hours to reach next level!</string>
+    <string name="my_friends_title">My Friends</string>
+    <string name="friend_requests">%amount% friend requests</string>
+    <string name="my_plants_title">My Plants</string>
+</resources>

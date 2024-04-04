@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#319F5E</color>
+    <color name="secondary">#D8D4C8</color>
+    <color name="typography">#111111</color>
+    <color name="icon">#444444</color>
+    <color name="sub_typography">#74D19A</color>
+    <color name="hyperlink">#05A0E3</color>
+
+    <color name="light_gray">#D9D9D9</color>
+    <color name="white">#ffffff</color>
+</resources>

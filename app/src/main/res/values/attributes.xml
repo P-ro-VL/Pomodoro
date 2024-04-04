@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FrameButton">
+        <attr name="hasLeading" format="boolean"/>
+        <attr name="leading" format="integer"/>
+        <attr name="text" format="string"/>
+        <attr name="disabled" format="boolean"/>
+        <attr name="textSize" format="dimension"/>
+        <attr name="leadingWidth" format="dimension"/>
+        <attr name="leadingHeight" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="AppBar">
+        <attr name="isTransparent" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="CoinChip">
+        <attr name="coinAmount" format="integer"/>
+    </declare-styleable>
+</resources>

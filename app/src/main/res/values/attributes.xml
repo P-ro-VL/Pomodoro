@@ -15,6 +15,6 @@
     </declare-styleable>
 
     <declare-styleable name="CoinChip">
-        <attr name="coinAmount" format="integer"/>
+        <attr name="color" format="color"/>
     </declare-styleable>
 </resources>

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/standard_padding"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textFontWeight="@integer/font_semi_bold"
+        android:textSize="14sp"
+        android:textAllCaps="true"
+        android:fontFamily="@font/madani"
+        android:text="@string/add_academic_record"/>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="8dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textFontWeight="@integer/font_medium"
+        android:textSize="14sp"
+        android:fontFamily="@font/madani"
+        android:text="@string/subject_name"/>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="4dp"/>
+
+    <EditText
+        android:id="@+id/subject_name_input"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:background="@drawable/edit_text_border"/>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="8dp"/>
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:id="@+id/semester_select"
+        app:justifyContent="space_between"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textFontWeight="@integer/font_medium"
+            android:textSize="14sp"
+            android:fontFamily="@font/madani"
+            android:text="@string/semester"/>
+    </com.google.android.flexbox.FlexboxLayout>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="4dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textFontWeight="@integer/font_medium"
+        android:textSize="14sp"
+        android:fontFamily="@font/madani"
+        android:text="@string/score"/>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="4dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="10">
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="10%"/>
+        <EditText
+            android:id="@+id/ten_percent_score_input"
+            android:layout_weight="9"
+            android:layout_width="0dp"
+            android:background="@drawable/edit_text_border"
+            android:layout_height="32dp"/>
+    </LinearLayout>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="4dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="10">
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="40%"/>
+        <EditText
+            android:id="@+id/forty_percent_score_input"
+            android:layout_weight="9"
+            android:layout_width="0dp"
+            android:background="@drawable/edit_text_border"
+            android:layout_height="32dp"/>
+    </LinearLayout>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="4dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="10">
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="50%"/>
+        <EditText
+            android:id="@+id/fifty_percent_score_input"
+            android:layout_weight="9"
+            android:layout_width="0dp"
+            android:background="@drawable/edit_text_border"
+            android:layout_height="32dp"/>
+    </LinearLayout>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="28dp"/>
+
+    <neu.provl.pomodoro.components.FrameButton
+        android:id="@+id/add_record"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:textSize="14sp"
+        app:text="@string/add_record"/>
+
+</LinearLayout>

@@ -24,6 +24,7 @@ public class PlantCard extends FrameLayout {
         int density = (int) context.getResources().getDisplayMetrics().density;
 
         FrameLayout.LayoutParams LP = new LayoutParams(90 * density, 115 * density);
+        LP.rightMargin = 12 * density;
         setLayoutParams(LP);
 
         FrameLayout layout = new FrameLayout(context);
@@ -45,15 +46,17 @@ public class PlantCard extends FrameLayout {
 
         ImageView plantImg = new ImageView(context);
         LayoutParams plantLP = new LayoutParams(65 * density, 65 * density);
+        plantLP.gravity = Gravity.END;
         plantImg.setLayoutParams(plantLP);
 
         LinearLayout textInfo = new LinearLayout(context);
+        textInfo.setPadding(8 * density,8 * density,8 * density,8 * density);
         textInfo.setOrientation(LinearLayout.VERTICAL);
-        LinearLayout.LayoutParams textInfoLP = new LinearLayout.LayoutParams(
+        FrameLayout.LayoutParams textInfoLP = new FrameLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        textInfoLP.gravity = Gravity.BOTTOM | Gravity.START;
+        textInfoLP.gravity = Gravity.BOTTOM;
         textInfo.setLayoutParams(textInfoLP);
 
         TextView plantName = new TextView(context);
@@ -63,7 +66,7 @@ public class PlantCard extends FrameLayout {
         plantName.setTypeface(getResources().getFont(R.font.medium));
 
         TextView plantType = new TextView(context);
-        plantType.setText(plant.getType().name());
+        plantType.setText(getResources().getString(plant.getType().getDisplayNameId()));
         plantType.setTextColor(ContextCompat.getColor(context, R.color.white));
         plantType.setTextSize(10f);
         plantType.setTypeface(getResources().getFont(R.font.light));
@@ -72,8 +75,8 @@ public class PlantCard extends FrameLayout {
         textInfo.addView(plantType);
 
         addView(layout);
-        addView(textInfo);
         addView(shadow);
+        addView(textInfo);
         addView(plantImg);
 
         new NetworkImageInjector(plantImg).execute(plant.getImageUrl());

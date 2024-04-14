@@ -3,4 +3,13 @@
     <string name="app_name">pomodoro</string>
     <string name="login_with_google">Đăng nhập bằng tài khoản Google</string>
     <string name="app_slogan">stay focus, be present</string>
+    <string name="hello_string">Chào buổi sáng, Linh!</string>
+    <string name="level">Cấp độ</string>
+    <string name="level_taken_hour">Bạn đã tập trung được %taken% tiếng.</string>
+    <string name="level_remaining_hour">Thêm %remaining% tiếng nữa để lên cấp!</string>
+    <string name="my_friends_title">Bạn của tôi</string>
+    <string name="friend_requests">%amount% lời mời</string>
+    <string name="my_plants_title">Cây của tôi</string>
+    <string name="type_plant">Cây</string>
+    <string name="type_flower">Hoa</string>
 </resources>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:ignore="MissingDefaultResource"
+    android:padding="@dimen/standard_padding"
+    android:orientation="vertical">
+
+    <com.google.android.flexbox.FlexboxLayout
+        app:justifyContent="space_between"
+        app:alignItems="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/statistics"
+            android:textSize="24sp"
+            android:textFontWeight="@integer/font_bold"
+            android:fontFamily="@font/madani"
+            android:textColor="@color/typography"/>
+        <ImageView
+            android:id="@+id/share_button"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/share"/>
+    </com.google.android.flexbox.FlexboxLayout>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="16dp"/>
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:weightSum="2"
+        app:justifyContent="space_around"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:layout_weight="1"
+            app:flexDirection="column"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/studying_hour"
+                android:textSize="16sp"
+                android:fontFamily="@font/madani"
+                android:textFontWeight="@integer/font_regular"
+                tools:ignore="Suspicious0dp" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="8dp"/>
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/studying_hour_chart"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_gravity="center"/>
+        </com.google.android.flexbox.FlexboxLayout>
+
+        <com.google.android.flexbox.FlexboxLayout
+            app:flexDirection="column"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <com.google.android.flexbox.FlexboxLayout
+                app:justifyContent="space_between"
+                app:alignItems="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="90 mins"
+                        android:textSize="36sp"
+                        android:fontFamily="@font/madani"
+                        android:textFontWeight="@integer/font_semi_bold"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/average_studying_time"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/madani"
+                        android:textFontWeight="@integer/font_thin"/>
+                </LinearLayout>
+                <ImageView
+                    android:id="@+id/average_studying_time_trend"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/trend_up"/>
+            </com.google.android.flexbox.FlexboxLayout>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="235"
+                android:textSize="36sp"
+                android:fontFamily="@font/madani"
+                android:textFontWeight="@integer/font_semi_bold"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/average_received_coin"
+                android:textSize="12sp"
+                android:fontFamily="@font/madani"
+                android:textFontWeight="@integer/font_thin"/>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="25/5"
+                android:textSize="36sp"
+                android:fontFamily="@font/madani"
+                android:textFontWeight="@integer/font_semi_bold"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/favourite_pomodoro_method"
+                android:textSize="12sp"
+                android:fontFamily="@font/madani"
+                android:textFontWeight="@integer/font_thin"/>
+        </com.google.android.flexbox.FlexboxLayout>
+    </com.google.android.flexbox.FlexboxLayout>
+
+</LinearLayout>

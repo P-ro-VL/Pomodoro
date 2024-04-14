@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="26sp"
+        android:fontFamily="@font/madani"
+        android:textFontWeight="@integer/font_bold"
+        android:text="@string/register"
+        android:layout_gravity="center"/>
+
+    <EditText
+        android:id="@+id/email_input"
+        android:layout_width="match_parent"
+        android:layout_marginTop="18dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="18dp"
+        android:layout_height="40dp"
+        android:background="@drawable/edit_text_border"
+        android:fontFamily="@font/madani"
+        android:textFontWeight="@integer/font_regular"
+        android:textSize="16sp"
+        android:inputType="textEmailAddress"
+        android:hint="@string/email"/>
+
+    <EditText
+        android:id="@+id/displayname_input"
+        android:layout_width="match_parent"
+        android:layout_marginTop="18dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="18dp"
+        android:layout_height="40dp"
+        android:background="@drawable/edit_text_border"
+        android:fontFamily="@font/madani"
+        android:textFontWeight="@integer/font_regular"
+        android:textSize="16sp"
+        android:inputType="textEmailAddress"
+        android:hint="@string/displayname"/>
+
+    <EditText
+        android:id="@+id/password_input"
+        android:layout_width="match_parent"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="18dp"
+        android:layout_height="40dp"
+        android:background="@drawable/edit_text_border"
+        android:fontFamily="@font/madani"
+        android:textFontWeight="@integer/font_regular"
+        android:textSize="16sp"
+        android:inputType="textPassword"
+        android:hint="@string/password"/>
+
+    <EditText
+        android:id="@+id/repassword_input"
+        android:layout_width="match_parent"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="18dp"
+        android:layout_height="40dp"
+        android:background="@drawable/edit_text_border"
+        android:fontFamily="@font/madani"
+        android:textFontWeight="@integer/font_regular"
+        android:textSize="16sp"
+        android:inputType="textPassword"
+        android:hint="@string/repassword"/>
+
+    <neu.provl.pomodoro.components.FrameButton
+        android:id="@+id/register_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        app:textSize="18sp"
+        app:text="@string/register"/>
+
+    <LinearLayout
+        android:layout_marginTop="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/madani"
+            android:text="@string/already_have_account"/>
+        <TextView
+            android:id="@+id/back_to_signin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="4dp"
+            android:textColor="@color/hyperlink"
+            android:fontFamily="@font/madani"
+            android:text="@string/back_to_sign_in"/>
+    </LinearLayout>
+</LinearLayout>

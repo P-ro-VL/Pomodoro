@@ -2,6 +2,7 @@ package neu.provl.pomodoro.components;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.GradientDrawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -17,21 +18,30 @@ import androidx.core.content.res.ResourcesCompat;
 
 import java.util.Objects;
 
+import neu.provl.pomodoro.MainActivity;
 import neu.provl.pomodoro.R;
+import neu.provl.pomodoro.data.controller.AuthenticationDriver;
+import neu.provl.pomodoro.data.controller.DatabaseDriver;
 
 public class CoinChip extends FrameLayout {
     private int coin;
+    private int coinTextId;
 
     public CoinChip(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
-        float density = context.getResources().getDisplayMetrics().density;
-
-        setBackground(ContextCompat.getDrawable(getContext(), R.drawable.coin_chip_border));
+        int density = (int) context.getResources().getDisplayMetrics().density;
 
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.CoinChip);
-        coin = attributes.getInt(R.styleable.CoinChip_coinAmount, 0);
+        coin = AuthenticationDriver.currentUser.getCoin();
+        int color = attributes.getColor(R.styleable.CoinChip_color, ContextCompat.getColor(context, R.color.secondary));
         attributes.recycle();
+
+        GradientDrawable background = new GradientDrawable();
+        background.setStroke((int) (2 * density), color);
+        background.setPadding(16 * density, 12 * density, 16 * density, 12 * density);
+        background.setCornerRadius(32 * density);
+        setBackground(background);
 
         LinearLayout linearLayout = new LinearLayout(context);
         linearLayout.setOrientation(LinearLayout.HORIZONTAL);
@@ -57,8 +67,9 @@ public class CoinChip extends FrameLayout {
         linearLayout.addView(imageView);
 
         TextView textView = new TextView(context);
+        textView.setId(coinTextId = generateViewId());
         textView.setText(String.valueOf(this.coin));
-        textView.setTextColor(ContextCompat.getColor(context, R.color.secondary));
+        textView.setTextColor(color);
         textView.setTextSize(14);
         textView.setTypeface(ResourcesCompat.getFont(context, R.font.semi_bold));
 
@@ -73,5 +84,10 @@ public class CoinChip extends FrameLayout {
         linearLayout.addView(textView);
 
         addView(linearLayout);
+    }
+
+    public void update() {
+        TextView textView = findViewById(coinTextId);
+        textView.setText(String.valueOf(AuthenticationDriver.currentUser.getCoin()));
     }
 }

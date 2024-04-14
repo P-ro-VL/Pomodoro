@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="12dp"
+    android:layout_marginStart="18dp"
+    android:layout_marginEnd="18dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="true"
+        android:fontFamily="@font/madani"
+        android:textFontWeight="@integer/font_semi_bold"
+        android:textSize="14sp"
+        android:text="@string/send_friend_request"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="8dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/madani"
+        android:textFontWeight="@integer/font_medium"
+        android:textSize="14sp"
+        android:text="@string/user_account_email"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="8dp"/>
+
+    <EditText
+        android:id="@+id/account_email_input"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:background="@drawable/edit_text_border"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="16dp"/>
+
+    <neu.provl.pomodoro.components.FrameButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:disabled="false"
+        app:hasLeading="false"
+        app:textSize="14sp"
+        app:text="@string/send_request"/>
+
+</LinearLayout>

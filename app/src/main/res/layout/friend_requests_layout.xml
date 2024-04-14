@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="18dp"
+    android:layout_marginStart="18dp"
+    android:layout_marginEnd="18dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="true"
+        android:fontFamily="@font/madani"
+        android:textFontWeight="@integer/font_semi_bold"
+        android:textSize="14sp"
+        android:text="@string/your_friend_request"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="18dp"/>
+    
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="305dp">
+        <LinearLayout
+            android:id="@+id/friend_request_scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
+    </ScrollView>
+
+</LinearLayout>

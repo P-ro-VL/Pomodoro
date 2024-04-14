@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/standard_padding"
+    android:orientation="vertical"
+    tools:ignore="MissingDefaultResource">
+
+    <com.google.android.flexbox.FlexboxLayout
+        app:justifyContent="space_between"
+        app:alignItems="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/academic_record"
+            android:textSize="24sp"
+            android:textFontWeight="@integer/font_bold"
+            android:fontFamily="@font/madani"
+            android:textColor="@color/typography"/>
+        <ImageView
+            android:id="@+id/share_button"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/share"/>
+    </com.google.android.flexbox.FlexboxLayout>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="12dp"/>
+
+    <com.google.android.flexbox.FlexboxLayout
+        app:justifyContent="space_between"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/GPA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="36sp"
+                android:textColor="@color/primary"
+                android:fontFamily="@font/madani"
+                android:textFontWeight="@integer/font_bold"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textFontWeight="@integer/font_light"
+                android:text="@string/gpa"
+                android:fontFamily="@font/madani"
+                android:textColor="@color/typography"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/degree_rank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="36sp"
+                android:textColor="@color/primary"
+                android:fontFamily="@font/madani"
+                android:textFontWeight="@integer/font_bold"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textFontWeight="@integer/font_light"
+                android:text="@string/rank_of_degree"
+                android:fontFamily="@font/madani"
+                android:textColor="@color/typography"/>
+        </LinearLayout>
+    </com.google.android.flexbox.FlexboxLayout>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="28sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:fontFamily="@font/madani"
+        android:textFontWeight="@integer/font_semi_bold"
+        android:text="@string/your_performance"/>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="4dp"/>
+    
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/performance_chart"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"/>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="4dp"/>
+
+    <com.google.android.flexbox.FlexboxLayout
+        app:justifyContent="space_between"
+        app:alignItems="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:fontFamily="@font/madani"
+            android:textFontWeight="@integer/font_semi_bold"
+            android:text="@string/records"/>
+        <neu.provl.pomodoro.components.FrameButton
+            android:id="@+id/add_record"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:textSize="14sp"
+            app:text="@string/add_record"/>
+    </com.google.android.flexbox.FlexboxLayout>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="18dp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/record_scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+</LinearLayout>

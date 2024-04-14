@@ -3,6 +3,9 @@ package neu.provl.pomodoro.components;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.ColorFilter;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -56,7 +59,7 @@ public class FriendAvatar extends FrameLayout {
 
         GradientDrawable statusRing = new GradientDrawable();
         statusRing.setCornerRadius(1000f); // To make it circular
-        statusRing.setColor(ContextCompat.getColor(context, user.isOnline() ? R.color.primary : R.color.secondary));
+        statusRing.setColor(ContextCompat.getColor(context, user.isStudying() ? R.color.primary : R.color.secondary));
 
         avatarLayout.setBackground(statusRing);
 
@@ -74,6 +77,9 @@ public class FriendAvatar extends FrameLayout {
         LayoutParams avatarLP = new LayoutParams(density*(width - 16) , density*(height - 16) );
         avatarLP.gravity = Gravity.CENTER;
         avatar.setLayoutParams(avatarLP);
+        if(!user.isStudying()) {
+            avatar.setColorFilter(new ColorMatrixColorFilter(new ColorMatrix(){{setSaturation(0f);}}));
+        }
 
         avatarLayout.addView(blankSpace);
         avatarLayout.addView(avatar);

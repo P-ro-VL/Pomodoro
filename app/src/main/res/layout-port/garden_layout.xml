@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:ignore="MissingDefaultResource">
+
+    <ImageView
+        android:id="@+id/garden_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/garden_background"/>
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:id="@+id/garden_title_section"
+        android:padding="@dimen/standard_padding"
+        android:layout_marginTop="60dp"
+        app:justifyContent="space_between"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/study_garden"
+            android:textSize="24sp"
+            android:textFontWeight="@integer/font_bold"
+            android:textColor="@color/white"
+            android:fontFamily="@font/madani"/>
+        <neu.provl.pomodoro.components.CoinChip
+            android:id="@+id/coin_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </com.google.android.flexbox.FlexboxLayout>
+
+    <TextView
+        android:id="@+id/countdown_clock"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="78dp"
+        android:layout_gravity="center_horizontal"
+        android:text="14:32"
+        android:textSize="56sp"
+        android:textColor="@color/white"
+        android:textFontWeight="@integer/font_bold"
+        android:fontFamily="@font/madani"/>
+
+    <FrameLayout
+        android:id="@+id/plant_region"
+        android:layout_gravity="center"
+        android:layout_width="130dp"
+        android:layout_height="130dp"/>
+    
+    <FrameLayout
+        android:id="@+id/garden_action_sheet"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/standard_padding"
+        android:background="@drawable/garden_action_sheet_background"
+        android:padding="12dp">
+    </FrameLayout>
+    
+
+</FrameLayout>

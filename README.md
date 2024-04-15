@@ -4,7 +4,9 @@
 
 **✎ File thiết kế Figma**: [Figma Design File](https://www.figma.com/file/Bs56fpxGaV04uRmmRgK0D4/Pomodoro?type=design&node-id=0%3A1&mode=design&t=EWPuyl0fcpmqMvJP-1)
 
-## Mô tả ứng dụng
+<img src="image.png" alt="drawing" width="200"/>
+<img src="image-1.png" alt="drawing" width="200"/>
+<img src="image-2.png" alt="drawing" width="200"/>
 
 Ứng dụng Pomodoro là ứng dụng Android, cung cấp trải nghiệm học tập với phương pháp đếm giờ Pomodoro mới lạ đến người dùng thông qua việc sưu tầm các loại cây và hoa; kiếm tiền và lên cấp sưu tầm bằng thời gian học tập với Pomodoro.
 

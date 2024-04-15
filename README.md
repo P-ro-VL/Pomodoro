@@ -52,3 +52,9 @@ Người dùng có thể nhập vào kết quả học tập (bao gồm các đ�
   - Dữ liệu thống kê: Các dữ liệu về thời gian học Pomodoro của người dùng
 
 Các dữ liệu lưu trữ local sẽ được tự động load vào ứng dụng và đồng bộ lên cơ sở dữ liệu (nếu cần thiết).
+
+## Ngôn ngữ hỗ trợ
+
+- Tiếng Việt
+- Tiếng Anh (United States)
+- Tiếng Hàn (한국인)

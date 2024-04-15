@@ -35,8 +35,10 @@ import java.util.concurrent.ThreadLocalRandom;
 import de.hdodenhof.circleimageview.CircleImageView;
 import neu.provl.pomodoro.MainActivity;
 import neu.provl.pomodoro.R;
+import neu.provl.pomodoro.components.FrameButton;
 import neu.provl.pomodoro.components.FriendAvatar;
 import neu.provl.pomodoro.components.PlantCard;
+import neu.provl.pomodoro.components.ProgressBar;
 import neu.provl.pomodoro.concurrent.NetworkImageInjector;
 import neu.provl.pomodoro.data.Plant;
 import neu.provl.pomodoro.data.User;
@@ -69,10 +71,24 @@ public class HomeFragment extends Fragment {
             heroSection.setClipToOutline(false);
 
             ImageView heroImage = root.findViewById(R.id.hero_image);
-            FrameLayout.LayoutParams heroImageLayoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, (int) (heroSection.getMeasuredHeight() - (24 * density)));
+            FrameLayout.LayoutParams heroImageLayoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,
+                    (int) (heroSection.getMeasuredHeight() - (24 * density)));
             heroImageLayoutParams.gravity = Gravity.END | Gravity.BOTTOM;
             heroImage.setLayoutParams(heroImageLayoutParams);
             heroImage.setImageResource(R.drawable.hero_side_image);
+
+
+
+            User user = AuthenticationDriver.currentUser;
+            int levelXp = (int) ((int)1000*(user.getLevel()/2.0));
+
+            ProgressBar progressBar = root.findViewById(R.id.exp_bar);
+            progressBar.setProgress(user.getXp()*1.0 / levelXp*1.0);
+            progressBar.update();
+
+            TextView xpRemain = root.findViewById(R.id.xp_remain);
+            xpRemain.setText(getResources().getString(R.string.level_taken_xp).replace("%taken%",
+                    (levelXp - user.getXp())*1.0 + ""));
         });
 
         refreshFriendStatus();
@@ -80,6 +96,9 @@ public class HomeFragment extends Fragment {
         initFriendList();
         initFriendRequest();
         initPlantList();
+
+        TextView level = root.findViewById(R.id.level);
+        level.setText(AuthenticationDriver.currentUser.getLevel() + "");
 
         return root;
     }
@@ -95,6 +114,7 @@ public class HomeFragment extends Fragment {
         int density = (int) getContext().getResources().getDisplayMetrics().density;
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
+        AlertDialog dialog = dialogBuilder.create();
         LayoutInflater layoutInflater = getLayoutInflater();
 
         View dialogView = layoutInflater.inflate(R.layout.send_friend_request_layout, null);
@@ -103,8 +123,14 @@ public class HomeFragment extends Fragment {
         background.setColor(ContextCompat.getColor(getContext(), R.color.white));
         dialogView.setBackground(background);
 
-        dialogBuilder.setView(dialogView);
-        dialogBuilder.show().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        FrameButton btn = dialogView.findViewById(R.id.send_friend_request);
+        btn.setOnClickListener((e) -> {
+            dialog.cancel();
+        });
+
+        dialog.setView(dialogView);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
     }
 
     void showFriendRequestsDialog() {

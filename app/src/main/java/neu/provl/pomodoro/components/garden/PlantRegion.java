@@ -15,6 +15,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 
+import com.google.mlkit.nl.translate.TranslateLanguage;
+
 import java.util.function.Consumer;
 
 import lombok.Getter;
@@ -25,6 +27,7 @@ import neu.provl.pomodoro.components.FrameButton;
 import neu.provl.pomodoro.concurrent.NetworkImageInjector;
 import neu.provl.pomodoro.data.Plant;
 import neu.provl.pomodoro.data.controller.AuthenticationDriver;
+import neu.provl.pomodoro.data.controller.TranslationDriver;
 
 public class PlantRegion extends FrameLayout {
 
@@ -159,7 +162,10 @@ public class PlantRegion extends FrameLayout {
         expPerPhase.setText(plant.getXpPerPhase() + "");
 
         TextView plantDescription = layout.findViewById(R.id.plant_description);
-        plantDescription.setText(plant.getDescription());
+        TranslationDriver.translate(plant.getDescription(), TranslateLanguage.VIETNAMESE)
+                .addOnSuccessListener((e) -> {
+                    plantDescription.setText(e);
+                });
 
         if(currentPlantDialogIndex == 0) {
             previousPlantBtn.setVisibility(INVISIBLE);

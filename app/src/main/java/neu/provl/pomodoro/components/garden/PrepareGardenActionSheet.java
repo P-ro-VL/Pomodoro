@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.Space;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 
@@ -30,6 +31,7 @@ import neu.provl.pomodoro.data.controller.DatabaseDriver;
 import neu.provl.pomodoro.data.pomodoro.PomodoroMethod;
 import neu.provl.pomodoro.data.Song;
 import neu.provl.pomodoro.data.pomodoro.PomodoroPeriod;
+import neu.provl.pomodoro.fragment.GardenFragment;
 
 public class PrepareGardenActionSheet extends GardenActionSheet {
 
@@ -38,13 +40,19 @@ public class PrepareGardenActionSheet extends GardenActionSheet {
 
     private Consumer<PomodoroPeriod> onStartStudyingRequest;
 
-    public PrepareGardenActionSheet(Context context) {
+    public PrepareGardenActionSheet(Context context, @Nullable PomodoroPeriod lastPeriodData) {
         super(context);
+
+        if(lastPeriodData != null) {
+            this.period = lastPeriodData;
+        }
 
         setOrientation(LinearLayout.VERTICAL);
         period.setBackgroundMusic(DatabaseDriver.getInstance().getAvailableSongs().get(0));
 
         period.initializePhases();
+
+        GardenFragment.LAST_PERIOD_DATA = period;
 
         update();
     }

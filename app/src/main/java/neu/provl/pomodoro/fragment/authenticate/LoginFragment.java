@@ -18,9 +18,13 @@ import androidx.fragment.app.Fragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.common.base.Charsets;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.nio.charset.Charset;
+import java.util.Base64;
 
 import neu.provl.pomodoro.LoginScreen;
 import neu.provl.pomodoro.MainActivity;
@@ -75,7 +79,7 @@ public class LoginFragment extends Fragment {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 FirebaseUser user = auth.getCurrentUser();
-                                AuthenticationDriver.signIn(user);
+                                AuthenticationDriver.signIn(user, email, password);
 
                                 Intent intent = new Intent(activity, MainActivity.class);
                                 startActivity(intent);
@@ -91,6 +95,18 @@ public class LoginFragment extends Fragment {
                     });
 
         });
+
+        if(AuthenticationDriver.LAST_LOGIN_USERNAME != null) {
+            emailInput.setText(AuthenticationDriver.LAST_LOGIN_USERNAME);
+
+            byte[] decoded = Base64.getDecoder().decode(AuthenticationDriver.LAST_LOGIN_PASSWORD);
+            passwordInput.setText(
+                    new String(decoded, Charsets.UTF_8)
+            );
+
+            loginBtn.performClick();
+        }
+
 
         TextView registerText = root.findViewById(R.id.create_new_account);
         registerText.setOnClickListener((e) -> {

@@ -20,7 +20,7 @@ public class Song {
     private String thumbnailUrl;
 
     public String getPlaybackURL() {
-        return "";
+        return "https://raw.githubusercontent.com/P-ro-VL/Pomodoro/main/songs/" + id + ".mp3";
     }
 
 }

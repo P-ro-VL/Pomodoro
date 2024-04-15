@@ -15,6 +15,8 @@ public class PeriodicThread extends Thread {
     private boolean running;
     private Duration interval;
 
+    @Getter
+    @Setter
     private Consumer<PeriodicThread> runnable;
 
     public PeriodicThread(Consumer<PeriodicThread> runnable, Duration interval) {

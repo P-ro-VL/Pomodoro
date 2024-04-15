@@ -1,6 +1,9 @@
 package neu.provl.pomodoro.fragment;
 
 import android.content.res.Configuration;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,13 +32,18 @@ import neu.provl.pomodoro.components.garden.PlantRegion;
 import neu.provl.pomodoro.components.garden.PrepareGardenActionSheet;
 import neu.provl.pomodoro.concurrent.PeriodicThread;
 import neu.provl.pomodoro.data.controller.AuthenticationDriver;
+import neu.provl.pomodoro.data.controller.NotificationDriver;
+import neu.provl.pomodoro.data.pomodoro.PomodoroMethod;
 import neu.provl.pomodoro.data.pomodoro.PomodoroPeriod;
 import neu.provl.pomodoro.data.pomodoro.PomodoroPhase;
+import neu.provl.pomodoro.data.pomodoro.PomodoroPhaseType;
 import neu.provl.pomodoro.util.StringUtils;
 
 public class GardenFragment extends Fragment {
 
     public static boolean isStudying = false;
+
+    public static PomodoroPeriod LAST_PERIOD_DATA = null;
 
     private ViewGroup root;
 
@@ -62,13 +70,13 @@ public class GardenFragment extends Fragment {
          != Configuration.ORIENTATION_LANDSCAPE) {
             actionSheet = new CollapsedGardenActionSheet(getContext());
             ((CollapsedGardenActionSheet) actionSheet).setOnRequestExpand(() -> {
-                this.actionSheet = new PrepareGardenActionSheet(getContext());
+                this.actionSheet = new PrepareGardenActionSheet(getContext(), LAST_PERIOD_DATA);
                 ((PrepareGardenActionSheet) this.actionSheet).setOnStartStudyingRequest(this::startStudying);
 
                 updateActionSheet();
             });
         } else {
-            this.actionSheet = new PrepareGardenActionSheet(getContext());
+            this.actionSheet = new PrepareGardenActionSheet(getContext(), LAST_PERIOD_DATA);
             ((PrepareGardenActionSheet) this.actionSheet).setOnStartStudyingRequest(this::startStudying);
         }
 
@@ -85,6 +93,8 @@ public class GardenFragment extends Fragment {
 
     private int clock = 0;
     public void startStudying(PomodoroPeriod period) {
+        AuthenticationDriver.currentUser.increaseMethod(period.getMethod());
+
         period.nextPhase();
         clock = period.getCurrentPhase().getMinutes() * 60;
 
@@ -124,7 +134,26 @@ public class GardenFragment extends Fragment {
 
             if(clock == 0) {
                 int coinReceive = period.getCurrentPhase().getCoinToGet();
+                int expReceive = period.getCurrentPhase().getExpToGet();
+
                 AuthenticationDriver.currentUser.addCoin(coinReceive);
+                AuthenticationDriver.currentUser.addExperience(expReceive);
+                AuthenticationDriver.currentUser.accumulateCoins(coinReceive);
+
+                MainActivity.getInstance().runOnUiThread(() -> {
+                    as.update();
+                    CoinChip coinChip = root.findViewById(R.id.coin_chip);
+                    coinChip.update();
+
+                    NotificationDriver.pushNotification(MainActivity.getInstance(),
+                            getString(R.string.finish_phase_noti_title),
+                            getString(R.string.finish_phase_noti_content)
+                                    .replace("%phase%", period.getCurrentPhase().getType()
+                                            == PomodoroPhaseType.STUDYING ? getResources().getString(R.string.studying_phase)
+                                            : getResources().getString(R.string.break_phase))
+                                    .replace("%coin%", coinReceive + "")
+                                    .replace("%exp%", expReceive + ""));
+                });
 
                 PomodoroPhase phase = period.nextPhase();
                 if(phase == null) {
@@ -133,12 +162,6 @@ public class GardenFragment extends Fragment {
                 }
 
                 clock = phase.getMinutes() * 60;
-
-                MainActivity.getInstance().runOnUiThread(() -> {
-                    as.update();
-                    CoinChip coinChip = root.findViewById(R.id.coin_chip);
-                    coinChip.update();
-                });
             } else {
                 clock--;
 
@@ -160,7 +183,7 @@ public class GardenFragment extends Fragment {
         FrameLayout actionSheetLayout = root.findViewById(R.id.garden_action_sheet);
 
         MainActivity.getInstance().runOnUiThread(() -> {
-            this.actionSheet = new PrepareGardenActionSheet(getContext());
+            this.actionSheet = new PrepareGardenActionSheet(getContext(), LAST_PERIOD_DATA);
             ((PrepareGardenActionSheet) this.actionSheet).setOnStartStudyingRequest(this::startStudying);
 
             updateActionSheet();

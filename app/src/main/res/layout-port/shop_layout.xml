@@ -20,6 +20,7 @@
             android:fontFamily="@font/madani"
             android:text="@string/shop"/>
         <neu.provl.pomodoro.components.CoinChip
+            android:id="@+id/coin_chip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />

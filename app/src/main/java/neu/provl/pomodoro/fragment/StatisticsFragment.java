@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,10 +23,16 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.renderer.YAxisRenderer;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 import neu.provl.pomodoro.R;
+import neu.provl.pomodoro.data.controller.AuthenticationDriver;
+import neu.provl.pomodoro.data.pomodoro.PomodoroMethod;
 
 public class StatisticsFragment extends Fragment {
     private LinearLayout root;
@@ -36,7 +43,7 @@ public class StatisticsFragment extends Fragment {
         this.root = (LinearLayout) inflater.inflate(R.layout.statistics_layout, null);
 
         BarChart studyingHourChart = root.findViewById(R.id.studying_hour_chart);
-        BarDataSet barDataSet = new BarDataSet(initTestChartData(), getResources().getString(R.string.studying_hour));
+        BarDataSet barDataSet = new BarDataSet(initChartData(), getResources().getString(R.string.studying_hour));
         barDataSet.setForm(Legend.LegendForm.CIRCLE);
         barDataSet.setColor(ContextCompat.getColor(getContext(), R.color.primary));
 
@@ -51,16 +58,45 @@ public class StatisticsFragment extends Fragment {
         studyingHourChart.setData(new BarData(barDataSet));
         studyingHourChart.invalidate();
 
+        initStatistics();
+
         return root;
     }
 
-    List<BarEntry> initTestChartData() {
-        List<BarEntry> dataset = new ArrayList<>();
+    void initStatistics() {
+        TextView avgStudyingHour = root.findViewById(R.id.avg_studying_time);
+        TextView avgReceivedCoin = root.findViewById(R.id.avg_received_coin);
+        TextView favouriteMethod = root.findViewById(R.id.favourite_method);
 
-        for(int i = 0; i < 5; i++) {
-            dataset.add(new BarEntry(i, ThreadLocalRandom.current().nextInt(1, 10)));
+        float avgSH = Math.round((
+                AuthenticationDriver.currentUser.getStudyingSeconds().values().stream().collect(Collectors.averagingInt(x -> x))
+                .floatValue() % 60)*10)/10f;
+        int avgRC = AuthenticationDriver.currentUser.getAccumulatedCoins()
+                .values().stream().collect(Collectors.averagingInt(x -> x))
+                .intValue();
+        Optional<Map.Entry<PomodoroMethod, Integer>> optional = AuthenticationDriver.currentUser.getMethodCounter()
+                .entrySet().stream().max(Comparator.comparingInt(Map.Entry::getValue));
+        PomodoroMethod pomodoroMethod = PomodoroMethod.TWENTY_FIVE_OUT_OF_FIVE;
+        if(optional.isPresent()) {
+            pomodoroMethod = optional.get().getKey();
         }
 
-        return dataset;
+        avgStudyingHour.setText(avgSH + "");
+        avgReceivedCoin.setText(avgRC + "");
+        favouriteMethod.setText(pomodoroMethod.getDisplayName());
     }
+
+    List<BarEntry> initChartData() {
+        List<BarEntry> data = new ArrayList<>();
+        List<Map .Entry<String, Integer>> entries = new ArrayList<>(
+                AuthenticationDriver.currentUser.getStudyingSeconds().entrySet()
+        );
+
+        for(int i = 0; i < entries.size(); i++) {
+            data.add(new BarEntry(i, Math.round((entries.get(i).getValue().floatValue() % 60)*10)/10f));
+        }
+
+        return data;
+    }
+
 }

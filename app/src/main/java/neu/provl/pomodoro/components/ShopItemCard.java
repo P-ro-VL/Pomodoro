@@ -18,12 +18,21 @@ import com.google.android.flexbox.JustifyContent;
 
 import org.w3c.dom.Text;
 
+import java.util.function.Consumer;
+
 import de.hdodenhof.circleimageview.CircleImageView;
+import lombok.Getter;
+import lombok.Setter;
 import neu.provl.pomodoro.R;
 import neu.provl.pomodoro.concurrent.NetworkImageInjector;
 import neu.provl.pomodoro.data.Plant;
 
 public class ShopItemCard extends FlexboxLayout {
+
+    @Getter
+    @Setter
+    private Consumer<Plant> onBuyRequest;
+
     public ShopItemCard(@NonNull Context context, @NonNull Plant plant) {
         super(context);
 
@@ -99,6 +108,9 @@ public class ShopItemCard extends FlexboxLayout {
         actionBtn.setText(getResources().getString(R.string.buy));
         actionBtn.setTextSize(12);
         actionBtn.update();
+        actionBtn.setOnClickListener((e) -> {
+            onBuyRequest.accept(plant);
+        });
 
         LinearLayout leadingLayout = new LinearLayout(context);
         leadingLayout.addView(avatar);

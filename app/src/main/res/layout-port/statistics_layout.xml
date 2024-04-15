@@ -65,9 +65,9 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/avg_studying_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="90 mins"
                 android:textSize="36sp"
                 android:fontFamily="@font/madani"
                 android:textFontWeight="@integer/font_semi_bold"/>
@@ -91,9 +91,9 @@
         android:layout_height="16dp"/>
 
     <TextView
+        android:id="@+id/avg_received_coin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="235"
         android:textSize="36sp"
         android:fontFamily="@font/madani"
         android:textFontWeight="@integer/font_semi_bold"/>
@@ -110,9 +110,9 @@
         android:layout_height="16dp"/>
 
     <TextView
+        android:id="@+id/favourite_method"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="25/5"
         android:textSize="36sp"
         android:fontFamily="@font/madani"
         android:textFontWeight="@integer/font_semi_bold"/>

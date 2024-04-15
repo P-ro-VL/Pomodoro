@@ -6,6 +6,8 @@ import androidx.core.content.ContextCompat;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.common.base.Charsets;
+import com.google.common.io.Files;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -14,8 +16,14 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,10 +32,15 @@ import lombok.Setter;
 import neu.provl.pomodoro.MainActivity;
 import neu.provl.pomodoro.R;
 import neu.provl.pomodoro.SplashScreen;
+import neu.provl.pomodoro.concurrent.LocalStorageThread;
+import neu.provl.pomodoro.data.AcademicRecord;
 import neu.provl.pomodoro.data.Plant;
 import neu.provl.pomodoro.data.PlantType;
 import neu.provl.pomodoro.data.Song;
 import neu.provl.pomodoro.data.Subject;
+import neu.provl.pomodoro.data.pomodoro.PomodoroMethod;
+import neu.provl.pomodoro.data.pomodoro.PomodoroPeriod;
+import neu.provl.pomodoro.fragment.GardenFragment;
 
 public class DatabaseDriver {
 
@@ -157,5 +170,120 @@ public class DatabaseDriver {
                     }
                 }
             });
+    }
+
+    public void loadConfig() {
+        try {
+            String str = Files.asCharSource(LocalStorageThread.CONFIG_FILE, Charsets.UTF_8).read();
+            if(str.isEmpty()) return;
+            JsonObject jsonObject = JsonParser.parseString(str).getAsJsonObject();
+
+            if(jsonObject.has("last-login")) {
+                JsonObject lastLoginObj = jsonObject.getAsJsonObject("last-login");
+                AuthenticationDriver.LAST_LOGIN_USERNAME = lastLoginObj.get("username").getAsString();
+                AuthenticationDriver.LAST_LOGIN_PASSWORD = lastLoginObj.get("password").getAsString();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void loadUserData() {
+        try {
+            String str = Files.asCharSource(LocalStorageThread.USER_DATA_FILE, Charsets.UTF_8).read();
+            if(str.isEmpty()) return;
+            JsonObject jsonObject = JsonParser.parseString(str).getAsJsonObject();
+
+            if(jsonObject.has("academic-records")) {
+                JsonObject recordObj = jsonObject.getAsJsonObject("academic-records");
+
+                for(Map.Entry<String, JsonElement> obj : recordObj.asMap().entrySet()) {
+                    JsonObject e = obj.getValue().getAsJsonObject();
+
+                    String name = e.get("subject-name").getAsString();
+                    String term = e.get("term").getAsString();
+                    double t = Double.parseDouble(e.get("10%").getAsString());
+                    double fo = Double.parseDouble(e.get("40%").getAsString());
+                    double fi = Double.parseDouble(e.get("50%").getAsString());
+
+                    AcademicRecord academicRecord = new AcademicRecord(
+                      name,
+                      term,
+                      new double[] {t, fo, fi}
+                    );
+
+                    AuthenticationDriver.currentUser.getAcademicRecords().add(academicRecord);
+                }
+            }
+
+            if(jsonObject.has("last-period-data"))  {
+                JsonObject lastPeriodData = jsonObject.get("last-period-data").getAsJsonObject();
+
+                String plantId = lastPeriodData.get("selected-plant").getAsString();
+                PomodoroMethod method = PomodoroMethod.valueOf(
+                        lastPeriodData.get("selected-method").getAsString().toUpperCase()
+                );
+                int studyingHour = Integer.parseInt(lastPeriodData.get("studying-hours").getAsString());
+                int studyingMinute = Integer.parseInt(lastPeriodData.get("studying-minutes").getAsString());
+                String bgmId = lastPeriodData.get("bgm-id").getAsString();
+                int coinExtra = Integer.parseInt(lastPeriodData.get("coin-extra").getAsString());
+                int expExtra = Integer.parseInt(lastPeriodData.get("exp-extra").getAsString());
+
+                PomodoroPeriod period = new PomodoroPeriod();
+                period.setPlantId(plantId);
+                period.setMethod(method);
+                period.setStudyingHour(studyingHour);
+                period.setStudyingMinute(studyingMinute);
+                period.setPlantCoinExtra(coinExtra);
+                period.setPlantExpExtra(expExtra);
+                period.setBackgroundMusic(getAvailableSongs().stream().filter(
+                        song -> song.getId().equalsIgnoreCase(bgmId)
+                ).findFirst().get());
+
+                GardenFragment.LAST_PERIOD_DATA = period;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void loadStatistics() {
+        try {
+            String str = Files.asCharSource(LocalStorageThread.STATISTIC_FILE, Charsets.UTF_8).read();
+            if(str.isEmpty()) return;
+            JsonObject jsonObject = JsonParser.parseString(str).getAsJsonObject();
+
+            Map<PomodoroMethod, Integer> counterMap = new HashMap<>();
+            JsonObject counter = jsonObject.get("counter").getAsJsonObject();
+            for(Map.Entry<String, JsonElement> entry : counter.asMap().entrySet()) {
+                counterMap.put(PomodoroMethod.valueOf(entry.getKey()),
+                        Integer.parseInt(entry.getValue().getAsString()));
+            }
+
+            AuthenticationDriver.currentUser.setMethodCounter(counterMap);
+
+            Map<String, Integer> studyingTimeMap = new HashMap<>();
+            JsonObject studyingTime = jsonObject.get("studying-time").getAsJsonObject();
+            for(Map.Entry<String, JsonElement> entry : studyingTime.asMap().entrySet()) {
+                studyingTimeMap.put(
+                        entry.getKey(),
+                        Integer.parseInt(entry.getValue().getAsString())
+                );
+            }
+            AuthenticationDriver.currentUser.setStudyingSeconds(studyingTimeMap);
+
+            Map<String, Integer> coinMap = new HashMap<>();
+            JsonObject coin = jsonObject.get("coin-received").getAsJsonObject();
+            for(Map.Entry<String, JsonElement> entry : coin.asMap().entrySet()) {
+                coinMap.put(
+                        entry.getKey(),
+                        Integer.parseInt(entry.getValue().getAsString())
+                );
+            }
+            AuthenticationDriver.currentUser.setAccumulatedCoins(coinMap);
+
+        }catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 }

@@ -7,8 +7,12 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.IOException;
+
 import lombok.Getter;
+import neu.provl.pomodoro.concurrent.LocalStorageThread;
 import neu.provl.pomodoro.data.controller.DatabaseDriver;
+import neu.provl.pomodoro.data.controller.NotificationDriver;
 import neu.provl.pomodoro.data.controller.TranslationDriver;
 
 public class SplashScreen extends AppCompatActivity {
@@ -34,7 +38,7 @@ public class SplashScreen extends AppCompatActivity {
         TextView loadingStatus = root.findViewById(R.id.loading_status);
 
         new Thread(() -> {
-           while(!loadingState.equalsIgnoreCase("finished")) {
+           while(!loadingState.equalsIgnoreCase("Finishing")) {
                runOnUiThread(() -> {
                    loadingStatus.setText(loadingState);
                });
@@ -47,9 +51,19 @@ public class SplashScreen extends AppCompatActivity {
            });
         }).start();
 
+        NotificationDriver.initNotificationChannel();
+
         TranslationDriver.init();
         DatabaseDriver.init();
 
-        loadingState = "finished";
+        try {
+            LocalStorageThread.init();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        DatabaseDriver.getInstance().loadConfig();
+
+        loadingState = "Finishing";
     }
 }

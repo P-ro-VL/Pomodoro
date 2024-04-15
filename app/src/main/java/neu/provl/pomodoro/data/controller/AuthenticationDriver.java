@@ -1,13 +1,17 @@
 package neu.provl.pomodoro.data.controller;
 
+import com.google.common.base.Charsets;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 
+import neu.provl.pomodoro.concurrent.LocalStorageThread;
 import neu.provl.pomodoro.data.AcademicRecord;
 import neu.provl.pomodoro.data.Plant;
 import neu.provl.pomodoro.data.Subject;
@@ -17,11 +21,19 @@ public class AuthenticationDriver {
 
     public static User currentUser;
 
-    public static void signIn(FirebaseUser user)  {
+    public static String LAST_LOGIN_USERNAME = "", LAST_LOGIN_PASSWORD = "";
+
+    public static LocalStorageThread LOCAL_STORAGE_THREAD = null;
+
+    public static void signIn(FirebaseUser user, String username, String password)  {
         AuthenticationDriver.currentUser = new User(
                 user.getUid(),
                 user.getDisplayName(),
                 user.getPhotoUrl().toString()
+        );
+        AuthenticationDriver.currentUser.setUsername(username);
+        AuthenticationDriver.currentUser.setEncryptedPassword(
+                Base64.getEncoder().encodeToString(password.getBytes(Charsets.UTF_8))
         );
 
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
@@ -44,6 +56,12 @@ public class AuthenticationDriver {
                     currentUser.setPlants(loadPlantList(plantIds));
 
                     currentUser.setAcademicRecords(loadAcademicRecords(rawAcademicRecords));
+
+                    DatabaseDriver.getInstance().loadUserData();
+                    DatabaseDriver.getInstance().loadStatistics();
+
+                    LOCAL_STORAGE_THREAD = new LocalStorageThread();
+                    LOCAL_STORAGE_THREAD.start();
                 });
     }
 

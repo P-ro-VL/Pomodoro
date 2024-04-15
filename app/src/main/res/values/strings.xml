@@ -4,8 +4,7 @@
     <string name="app_slogan">stay focused, be present</string>
     <string name="hello_string">Good morning, Linh!</string>
     <string name="level">Level</string>
-    <string name="level_taken_hour">You have studied for %taken% hours.</string>
-    <string name="level_remaining_hour">%remaining% more hours to reach next level!</string>
+    <string name="level_taken_xp">You need %exp% more exp to level up!</string>
     <string name="my_friends_title">My Friends</string>
     <string name="friend_requests">%amount% friend requests</string>
     <string name="my_plants_title">My Plants</string>
@@ -84,4 +83,8 @@
     <string name="ordinary">Ordinary</string>
     <string name="splash_screen_fetching_song">Fetching songs data from database...</string>
     <string name="song_fetch_error">An unexpected error has occured while trying to fetch all songs from database. Error: %error%</string>
+    <string name="owned_all">You have owned all items</string>
+    <string name="not_enough_money">You don\'t have enough coin</string>
+    <string name="finish_phase_noti_title">You have just finished a Pomodoro phase!</string>
+    <string name="finish_phase_noti_content">Having finished a %phase%, you\'ve just got %coin% coins and %exp% exp.</string>
 </resources>

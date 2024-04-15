@@ -68,6 +68,7 @@
                             android:textSize="48sp" />
                     </LinearLayout>
                     <TextView
+                        android:id="@+id/xp_remain"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="8sp"
@@ -75,19 +76,11 @@
                         android:fontFamily="@font/madani"
                         android:textFontWeight="@integer/font_light"
                         android:textColor="#ffffff"
-                        android:text="@string/level_taken_hour"
+                        android:text="@string/level_taken_xp"
                          />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="8sp"
-                        android:textStyle="italic"
-                        android:fontFamily="@font/madani"
-                        android:textFontWeight="@integer/font_light"
-                        android:textColor="#ffffff"
-                        android:text="@string/level_remaining_hour"/>
 
                     <neu.provl.pomodoro.components.ProgressBar
+                        android:id="@+id/exp_bar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"/>

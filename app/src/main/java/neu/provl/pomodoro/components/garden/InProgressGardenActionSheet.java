@@ -3,6 +3,10 @@ package neu.provl.pomodoro.components.garden;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.ViewGroup;
@@ -37,6 +41,9 @@ public class InProgressGardenActionSheet extends GardenActionSheet {
     @Setter
     private boolean stop = false;
 
+    private MediaPlayer mediaPlayer;
+    private boolean isMusicPausing;
+
     public InProgressGardenActionSheet(@NonNull Context context, @NonNull PomodoroPeriod period) {
         super(context);
 
@@ -44,6 +51,22 @@ public class InProgressGardenActionSheet extends GardenActionSheet {
         setOrientation(LinearLayout.VERTICAL);
 
         update();
+
+        /*
+         * Play Music
+         */
+        try {
+            Uri uri = Uri.parse(period.getBackgroundMusic().getPlaybackURL());
+            mediaPlayer = new MediaPlayer();
+            mediaPlayer.setAudioAttributes(new AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build());
+            mediaPlayer.setDataSource(getContext(), uri);
+            mediaPlayer.setLooping(true);
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+        } catch(Exception e) {
+            System.out.println(e.toString());
+        }
     }
 
     public void update() {
@@ -111,6 +134,15 @@ public class InProgressGardenActionSheet extends GardenActionSheet {
                 64 * getDensity()
         );
         pauseLayout.setLayoutParams(pauseLayoutParams);
+        pauseLayout.setOnClickListener((e) -> {
+            if(!isMusicPausing) {
+                mediaPlayer.pause();
+                isMusicPausing = true;
+            } else {
+                mediaPlayer.start();
+                isMusicPausing = false;
+            }
+        });
 
         GradientDrawable pauseIconBg = new GradientDrawable();
         pauseIconBg.setColor(ContextCompat.getColor(getContext(), R.color.white));

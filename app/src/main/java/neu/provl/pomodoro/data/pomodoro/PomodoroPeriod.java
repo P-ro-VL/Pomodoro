@@ -7,6 +7,7 @@ import java.util.Stack;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import neu.provl.pomodoro.data.Song;
+import neu.provl.pomodoro.data.controller.AuthenticationDriver;
 
 @Data
 @NoArgsConstructor
@@ -22,6 +23,7 @@ public class PomodoroPeriod {
 
     private PomodoroPhase currentPhase;
 
+    private String plantId;
     private int plantCoinExtra, plantExpExtra;
 
     public PomodoroPhase nextPhase() {
@@ -45,7 +47,8 @@ public class PomodoroPeriod {
             PomodoroPhaseType type = isStudying ? PomodoroPhaseType.STUDYING : PomodoroPhaseType.BREAK;
 
             PomodoroPhase phase = new PomodoroPhase(time, type, "",
-                    BASE_COIN_PER_PHASE + plantCoinExtra, BASE_EXP_PER_PHASE + plantExpExtra);
+                    BASE_COIN_PER_PHASE * AuthenticationDriver.currentUser.getLevel() + plantCoinExtra,
+                    BASE_EXP_PER_PHASE * AuthenticationDriver.currentUser.getLevel() + plantExpExtra);
             getPhases().add(phase);
 
             totalMinutes -= time;
